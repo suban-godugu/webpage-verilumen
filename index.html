@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verilumen Labs | AI Intelligence for Semiconductor Testing</title>
+    <meta
+      name="description"
+      content="Verilumen transforms complex semiconductor test data into actionable, AI-driven optimization opportunities for ATE test cost, production speed, and existing test infrastructure."
+    />
+    <link rel="canonical" href="https://www.verilumen.ai/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.verilumen.ai/" />
+    <meta property="og:title" content="Verilumen Labs | AI Intelligence for Semiconductor Testing" />
+    <meta
+      property="og:description"
+      content="Transform semiconductor test data into actionable engineering intelligence with AI-powered analysis and optimization."
+    />
+    <meta property="og:image" content="https://www.verilumen.ai/logo.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Verilumen Labs | AI Intelligence for Semiconductor Testing" />
+    <meta
+      name="twitter:description"
+      content="AI platform for semiconductor test engineering — ATE analytics, yield, wafer intelligence, and failure diagnosis."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Verilumen Labs",
+        "url": "https://www.verilumen.ai/",
+        "logo": "https://www.verilumen.ai/logo.svg",
+        "description": "AI intelligence platform for semiconductor test engineering."
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      try {
+        var stored = localStorage.getItem('verilumen-theme')
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark'
+        document.documentElement.dataset.theme = theme
+      } catch (e) {
+        document.documentElement.dataset.theme = 'dark'
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
