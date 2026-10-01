@@ -34,11 +34,11 @@ export function Careers() {
         <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
           <ScrollReveal className="min-w-0">
             <p className="label-tech">Careers</p>
-            <h2 className="fluid-section-title mt-3 text-text">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-text leading-tight mt-3 text-text">
               Build the intelligence layer for semiconductor engineering
             </h2>
             <div className="section-rule mt-4" />
-            <p className="fluid-section-lede mt-5">
+            <p className="text-lg md:text-xl text-text-muted leading-relaxed mt-5">
               We turn engineering data into machine intelligence — for people who care about yield,
               test cost, and the systems behind both.
             </p>
@@ -57,7 +57,7 @@ export function Careers() {
           <div className="min-w-0 space-y-4">
             {roles.map((role, i) => (
               <ScrollReveal key={role.title} delay={i * 0.06}>
-                <article className="pro-panel flex h-full flex-col p-6 sm:p-7">
+                <article className="premium-card backdrop-blur-sm flex h-full flex-col p-6 sm:p-7">
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     {role.tags.map((tag, ti) => (
                       <span key={tag} className="font-mono text-[10px] tracking-[0.12em] text-accent uppercase">
@@ -100,3 +100,6 @@ export function Careers() {
     </section>
   )
 }
+
+
+

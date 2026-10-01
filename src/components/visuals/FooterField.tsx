@@ -33,17 +33,18 @@ export function FooterField() {
     const spark = isLight ? '#00A99D' : '#8FFFF8'
 
     function paint(seconds: number) {
+      if (!ctx) return
       ctx.clearRect(0, 0, width, height)
       const rows = width < 768 ? 11 : 18
       const cols = width < 768 ? 28 : 52
-      const horizon = height * 0.14
+      const horizon = height * 0.02
       const floor = height - 0.5
       const speed = reducedMotion ? 0 : seconds * 0.95
 
       for (let r = 0; r < rows; r++) {
         const t = r / (rows - 1)
         const depth = 0.22 + t * 0.78
-        const yBase = horizon + (floor - horizon) * (0.18 + t * 0.82)
+        const yBase = horizon + (floor - horizon) * (0.04 + t * 0.96)
         const spread = 0.78 + depth * 0.28
         const amp = height * (0.012 + depth * 0.05)
         const size = t < 0.34 ? 0.35 + t * 0.9 : t < 0.68 ? 0.62 + (t - 0.34) * 1.05 : 0.85 + (t - 0.68) * 1.55
@@ -86,6 +87,7 @@ export function FooterField() {
     }
 
     function resize() {
+      if (!canvas || !ctx) return
       const rect = canvas.getBoundingClientRect()
       width = Math.max(1, Math.floor(rect.width || window.innerWidth))
       height = Math.max(1, Math.floor(rect.height || 1))

@@ -158,8 +158,8 @@ export function KpiCard({
       {/* Main KPI Number (64-76px on desktop) */}
       <div className="relative z-10 mt-3 sm:mt-4">
         <p
-          className="font-extrabold tracking-[-0.04em] text-text transition-all duration-300"
-          style={{ fontSize: 'clamp(2.75rem, 4.4vw, 4.4rem)', lineHeight: 1 }}
+          className="font-bold tracking-tight text-text transition-all duration-300"
+          style={{ fontSize: 'clamp(2.25rem, 3.5vw, 3.5rem)', lineHeight: 1 }}
         >
           {display}
           {kpiSuffix}
@@ -174,20 +174,6 @@ export function KpiCard({
 
       {/* Secondary Metrics Meta */}
       {meta && <div className="relative z-10 mt-3.5 min-w-0">{meta}</div>}
-
-      {/* Bottom Action Footer */}
-      <div className="relative z-10 mt-auto flex items-center justify-between border-t border-border/50 pt-3.5">
-        <span className="text-[11px] font-bold tracking-[0.2em] text-text-muted uppercase transition-colors group-hover:text-text">
-          EXPLORE
-        </span>
-        <span
-          className="font-mono text-base transition-transform duration-200 group-hover:translate-x-1"
-          style={{ color: a.primary }}
-          aria-hidden
-        >
-          →
-        </span>
-      </div>
     </motion.article>
   )
 }
@@ -212,12 +198,11 @@ export function HistogramViz({ active }: { active: boolean }) {
             x2="272"
             y1={y}
             y2={y}
-            stroke={theme === 'light' ? 'rgba(7,18,25,0.06)' : 'rgba(255,255,255,0.05)'}
+            stroke={theme === 'light' ? 'rgba(7,18,25,0.08)' : 'rgba(34,230,208,0.08)'}
             strokeWidth="1"
           />
         ))}
-        {/* Smooth Baseline */}
-        <line x1="8" x2="272" y1="108" y2="108" stroke="rgba(34,230,208,0.30)" strokeWidth="1.5" />
+        <line x1="8" x2="272" y1="108" y2="108" stroke="rgba(34,230,208,0.45)" strokeWidth="1" />
 
         {/* AI Recommended distribution (cyan) */}
         {ai.map((h, i) => {
@@ -231,8 +216,10 @@ export function HistogramViz({ active }: { active: boolean }) {
               width="9"
               rx="1.5"
               fill="url(#histCyan)"
+              stroke="#22E6D0"
+              strokeWidth="1"
               style={{
-                filter: isPeak ? 'drop-shadow(0 0 6px rgba(34,230,208,0.5))' : undefined,
+                filter: isPeak ? 'drop-shadow(0 0 4px rgba(34,230,208,0.55))' : undefined,
               }}
               initial={reduced ? false : { height: 0, y: 108 }}
               animate={active ? { height, y: 108 - height } : { height: 0, y: 108 }}
@@ -253,9 +240,11 @@ export function HistogramViz({ active }: { active: boolean }) {
               width="9"
               rx="1.5"
               fill="url(#histBlue)"
-              opacity={0.82}
+              stroke="#2997FF"
+              strokeWidth="1"
+              opacity={0.9}
               style={{
-                filter: isPeak ? 'drop-shadow(0 0 6px rgba(41,151,255,0.4))' : undefined,
+                filter: isPeak ? 'drop-shadow(0 0 4px rgba(41,151,255,0.45))' : undefined,
               }}
               initial={reduced ? false : { height: 0, y: 108 }}
               animate={active ? { height, y: 108 - height } : { height: 0, y: 108 }}
@@ -321,7 +310,7 @@ export function ShmooViz({ active }: { active: boolean }) {
     return pts
   }, [])
 
-  const gridStroke = theme === 'light' ? 'rgba(7,18,25,0.06)' : 'rgba(255,255,255,0.05)'
+  const gridStroke = theme === 'light' ? 'rgba(7,18,25,0.08)' : 'rgba(34,230,208,0.08)'
 
   return (
     <div className="flex h-full w-full flex-col justify-end">
@@ -342,7 +331,7 @@ export function ShmooViz({ active }: { active: boolean }) {
           ry="30"
           fill="rgba(34, 230, 208, 0.12)"
           stroke="#22E6D0"
-          strokeWidth="1.2"
+          strokeWidth="1"
           initial={reduced ? false : { opacity: 0, scale: 0.8 }}
           animate={active ? { opacity: 1, scale: 1 } : { opacity: 0 }}
           transition={{ duration: 0.7, delay: 0.3 }}
@@ -359,7 +348,7 @@ export function ShmooViz({ active }: { active: boolean }) {
           cy="55"
           r="3"
           fill="#22E6D0"
-          style={{ filter: 'drop-shadow(0 0 5px #22E6D0)' }}
+          style={{ filter: 'drop-shadow(0 0 4px #22E6D0)' }}
           initial={reduced ? false : { scale: 0 }}
           animate={active ? { scale: 1 } : { scale: 0 }}
           transition={{ delay: 0.5 }}
@@ -370,7 +359,7 @@ export function ShmooViz({ active }: { active: boolean }) {
           d="M40 95 C 90 88, 120 70, 155 55 C 170 48, 190 42, 230 38"
           fill="none"
           stroke="url(#shmooPath)"
-          strokeWidth="1.5"
+          strokeWidth="1"
           strokeDasharray="4 3"
           initial={reduced ? false : { pathLength: 0, opacity: 0 }}
           animate={active ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
@@ -426,9 +415,9 @@ export function PatternCompareViz({ active }: { active: boolean }) {
           <span>Pattern Size</span>
           <span className="font-mono text-text-muted">14.38 MB</span>
         </div>
-        <div className="h-2.5 overflow-hidden rounded-full bg-bg-elevated">
+        <div className="h-px overflow-hidden bg-border">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[#2997FF] to-[#22E6D0] opacity-80"
+            className="h-px bg-[#2997FF] shadow-[0_0_6px_rgba(41,151,255,0.45)]"
             initial={reduced ? false : { width: 0 }}
             animate={active ? { width: '100%' } : { width: 0 }}
             transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
@@ -442,12 +431,9 @@ export function PatternCompareViz({ active }: { active: boolean }) {
           <span>Optimized Size</span>
           <span className="font-mono text-accent">8.63 MB</span>
         </div>
-        <div className="h-2.5 overflow-hidden rounded-full bg-bg-elevated">
+        <div className="h-px overflow-hidden bg-border">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[#22E6D0] to-[#3DDC97]"
-            style={{
-              boxShadow: '0 0 10px rgba(34, 230, 208, 0.28)',
-            }}
+            className="h-px bg-[#22E6D0] shadow-[0_0_6px_rgba(34,230,208,0.5)]"
             initial={reduced ? false : { width: 0 }}
             animate={active ? { width: '60%' } : { width: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 1, 0.5, 1] }}
@@ -458,7 +444,10 @@ export function PatternCompareViz({ active }: { active: boolean }) {
       {/* Data Flow track */}
       <div className="pt-0.5">
         <svg viewBox="0 0 280 38" className="h-9 w-full" aria-hidden>
-          <line x1="30" y1="18" x2="250" y2="18" stroke="var(--vl-border)" strokeWidth="1" strokeDasharray="3 3" opacity="0.35" />
+          {[10, 18, 26].map((y) => (
+            <line key={y} x1="8" x2="272" y1={y} y2={y} stroke="rgba(34,230,208,0.1)" strokeWidth="1" />
+          ))}
+          <line x1="30" y1="18" x2="250" y2="18" stroke="#22E6D0" strokeWidth="1" />
           {particles.map((p) => (
             <motion.circle
               key={p.id}
@@ -515,11 +504,13 @@ export function FailureMatrixViz({ active }: { active: boolean }) {
   return (
     <div className="flex h-full w-full flex-col justify-end">
       <svg viewBox="0 0 280 120" className="h-full w-full" aria-hidden>
-        {/* Subtle connection paths within failure clusters */}
-        <line x1="54" y1="30" x2="84" y2="46" stroke="rgba(255,83,100,0.22)" strokeWidth="0.8" />
-        <line x1="84" y1="46" x2="114" y2="30" stroke="rgba(255,83,100,0.22)" strokeWidth="0.8" />
-        <line x1="144" y1="62" x2="174" y2="78" stroke="rgba(255,83,100,0.22)" strokeWidth="0.8" />
-        <line x1="174" y1="78" x2="204" y2="62" stroke="rgba(255,83,100,0.22)" strokeWidth="0.8" />
+        {Array.from({ length: 6 }, (_, i) => (
+          <line key={`fg${i}`} x1="16" x2="264" y1={14 + i * 16} y2={14 + i * 16} stroke={theme === 'light' ? 'rgba(7,18,25,0.08)' : 'rgba(34,230,208,0.08)'} strokeWidth="1" />
+        ))}
+        <line x1="54" y1="30" x2="84" y2="46" stroke="rgba(255,83,100,0.55)" strokeWidth="1" />
+        <line x1="84" y1="46" x2="114" y2="30" stroke="rgba(255,83,100,0.55)" strokeWidth="1" />
+        <line x1="144" y1="62" x2="174" y2="78" stroke="rgba(240,166,58,0.55)" strokeWidth="1" />
+        <line x1="174" y1="78" x2="204" y2="62" stroke="rgba(240,166,58,0.55)" strokeWidth="1" />
 
         {/* Matrix Nodes */}
         {cells.map((cell, i) => {
@@ -553,7 +544,7 @@ export function FailureMatrixViz({ active }: { active: boolean }) {
           rx="4"
           fill="none"
           stroke="rgba(255,83,100,0.38)"
-          strokeWidth="1.2"
+          strokeWidth="1"
           strokeDasharray="3 2"
           initial={{ opacity: 0 }}
           animate={active ? { opacity: 1 } : { opacity: 0 }}
@@ -568,8 +559,8 @@ export function FailureMatrixViz({ active }: { active: boolean }) {
           height="38"
           rx="4"
           fill="none"
-          stroke="rgba(240,166,58,0.32)"
-          strokeWidth="1.2"
+          stroke="rgba(240,166,58,0.55)"
+          strokeWidth="1"
           strokeDasharray="3 2"
           initial={{ opacity: 0 }}
           animate={active ? { opacity: 1 } : { opacity: 0 }}
@@ -592,3 +583,5 @@ export function VizGate({ children }: { children: (active: boolean) => ReactNode
     </div>
   )
 }
+
+

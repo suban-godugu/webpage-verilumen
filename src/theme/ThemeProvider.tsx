@@ -13,6 +13,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    document.documentElement.classList.remove('light', 'dark')
+    document.documentElement.classList.add(theme)
+    document.documentElement.style.colorScheme = theme
     window.localStorage.setItem('verilumen-theme', theme)
   }, [theme])
 

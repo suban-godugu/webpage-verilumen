@@ -32,10 +32,10 @@ export function Contact() {
       <div className="site grid min-w-0 gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
         <ScrollReveal className="min-w-0">
           <p className="label-tech">Contact</p>
-          <h2 className="fluid-section-title mt-3 text-text">Talk to our team</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-text leading-tight mt-3">Talk to our team</h2>
           <div className="section-rule mt-4" />
-          <p className="fluid-section-lede mt-5">
-            Share your semiconductor test challenge — yield, retest, SHMOO, or cost — and we’ll
+          <p className="text-lg md:text-xl text-text-muted leading-relaxed mt-5">
+            Share your semiconductor test challenge &mdash; yield, retest, SHMOO, or cost &mdash; and we'll
             follow up with the right engineering contact.
           </p>
           <ul className="mt-8 space-y-2.5">
@@ -83,7 +83,7 @@ export function Contact() {
                   id="contact-position"
                   name="position"
                   label="Position / Role"
-                  placeholder="Test Engineer, Yield Lead, …"
+                  placeholder="Test Engineer, Yield Lead"
                   required
                 />
               </div>
@@ -127,7 +127,7 @@ export function Contact() {
                 />
               </div>
               {error && <p className="text-sm text-critical">{error}</p>}
-              <MagneticButton type="submit">Submit Request →</MagneticButton>
+              <MagneticButton type="submit">Submit Request &rarr;</MagneticButton>
             </form>
           )}
         </ScrollReveal>

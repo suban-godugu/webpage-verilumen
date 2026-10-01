@@ -8,10 +8,11 @@ type Particle = {
   vx: number
   vy: number
   r: number
+  depth: number
   core: boolean
 }
 
-export function ParticleField({ className = '' }: { className?: string }) {
+export function ParticleField({ className = '', dense = false }: { className?: string; dense?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const reduced = useReducedMotion()
   const { theme } = useTheme()
@@ -29,21 +30,26 @@ export function ParticleField({ className = '' }: { className?: string }) {
     let particles: Particle[] = []
 
     const countFor = () => {
-      if (reduced) return 40
-      return window.innerWidth < 768 ? 70 : 140
+      const base = reduced ? 40 : window.innerWidth < 768 ? 70 : 140
+      return dense ? Math.round(base * 1.45) : base
     }
 
     const seed = () => {
       const n = countFor()
-      particles = Array.from({ length: n }, (_, i) => ({
-        x: Math.random(),
-        y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.00022,
-        vy: (Math.random() - 0.5) * 0.00022,
-        r: i % 17 === 0 ? 2.4 : 0.9 + Math.random() * 1.1,
-        core: i % 17 === 0,
-      }))
-      if (!particles.some((p) => p.core)) particles[0].core = true
+      particles = Array.from({ length: n }, (_, i) => {
+        const band = i % 3
+        const depth = band === 0 ? 0.18 + Math.random() * 0.16 : band === 1 ? 0.46 + Math.random() * 0.16 : 0.74 + Math.random() * 0.22
+        const speed = 0.00006 + depth * 0.00016
+        return {
+          x: Math.random(),
+          y: Math.random(),
+          vx: (Math.random() - 0.5) * speed,
+          vy: (Math.random() - 0.5) * speed * 0.55,
+          r: 0.4 + depth * 1.25,
+          depth,
+          core: depth > 0.86 && i % 13 === 0,
+        }
+      })
     }
 
     const resize = () => {
@@ -87,38 +93,41 @@ export function ParticleField({ className = '' }: { className?: string }) {
         return { ...p, px: p.x * w, py: p.y * h }
       })
 
-      const linkDist = Math.min(w, h) * 0.12
-      for (let i = 0; i < pts.length; i++) {
-        for (let j = i + 1; j < pts.length; j++) {
-          const a = pts[i]!
-          const b = pts[j]!
+      const ordered = [...pts].sort((a, b) => a.depth - b.depth)
+      const linkDist = Math.min(w, h) * 0.11
+      for (let i = 0; i < ordered.length; i++) {
+        for (let j = i + 1; j < ordered.length; j++) {
+          const a = ordered[i]!
+          const b = ordered[j]!
+          if (Math.abs(a.depth - b.depth) > 0.22) continue
           const d = Math.hypot(a.px - b.px, a.py - b.py)
           if (d > linkDist) continue
           ctx.strokeStyle = line
-          ctx.globalAlpha = 0.18 * (1 - d / linkDist)
-          ctx.lineWidth = 0.7
+          ctx.globalAlpha = (0.06 + a.depth * 0.16) * (1 - d / linkDist)
+          ctx.lineWidth = 1
           ctx.beginPath()
           ctx.moveTo(a.px, a.py)
           ctx.lineTo(b.px, b.py)
           ctx.stroke()
         }
       }
-      ctx.globalAlpha = 1
 
-      pts.forEach((p) => {
+      ordered.forEach((p) => {
+        ctx.globalAlpha = 0.28 + p.depth * 0.55
         ctx.beginPath()
         ctx.fillStyle = p.core ? secondary : particle
         ctx.arc(p.px, p.py, p.r, 0, Math.PI * 2)
         ctx.fill()
         if (p.core) {
           ctx.strokeStyle = primary
-          ctx.globalAlpha = 0.35
+          ctx.globalAlpha = 0.22 + p.depth * 0.2
+          ctx.lineWidth = 1
           ctx.beginPath()
-          ctx.arc(p.px, p.py, 10, 0, Math.PI * 2)
+          ctx.arc(p.px, p.py, 7 + p.depth * 3, 0, Math.PI * 2)
           ctx.stroke()
-          ctx.globalAlpha = 1
         }
       })
+      ctx.globalAlpha = 1
 
       raf = requestAnimationFrame(draw)
     }
@@ -140,7 +149,7 @@ export function ParticleField({ className = '' }: { className?: string }) {
       ro.disconnect()
       io.disconnect()
     }
-  }, [reduced, theme])
+  }, [reduced, theme, dense])
 
   return (
     <canvas

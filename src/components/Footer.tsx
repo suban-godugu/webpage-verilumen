@@ -34,18 +34,18 @@ const columns = [
   {
     title: 'Solutions',
     links: [
-      { href: '#solutions', label: 'Retest Reduction' },
-      { href: '#solutions', label: 'SHMOO Optimization' },
-      { href: '#solutions', label: 'Test Time Optimization' },
-      { href: '#solutions', label: 'RA Advisor' },
+      { href: '/#solutions', label: 'Retest Reduction' },
+      { href: '/#solutions', label: 'SHMOO Optimization' },
+      { href: '/#solutions', label: 'Test Time Optimization' },
+      { href: '/#solutions', label: 'RA Advisor' },
     ],
   },
   {
     title: 'Company',
     links: [
-      { href: '#home', label: 'Home' },
-      { href: '#careers', label: 'Careers' },
-      { href: '#contact', label: 'Contact Us' },
+      { href: '/#home', label: 'Home' },
+      { href: '/#careers', label: 'Careers' },
+      { href: '/#contact', label: 'Contact Us' },
     ],
   },
 ]
@@ -69,32 +69,40 @@ export function Footer() {
   }
 
   return (
-    <footer className="footer-shell relative border-t border-border">
-      <div className="footer-rail absolute inset-x-0 top-0 h-px" aria-hidden />
+    <footer className="relative mt-20 border-t border-border-subtle/50 bg-bg-secondary/30 overflow-hidden">
+      {/* Top glowing edge */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-primary/30 to-transparent blur-sm" />
 
-      <div className="relative z-10 site py-10 sm:py-12">
-        <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3 xl:gap-12">
+      {/* Ambient background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-48 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 site py-16">
+        <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-3">
           <ScrollReveal>
             <a
               ref={logoRef}
-              href="#home"
-              className="footer-brand inline-flex items-center gap-2.5 transition-transform duration-300 will-change-transform"
+              href="/#home"
+              className="inline-flex items-center gap-3 transition-transform duration-300 will-change-transform"
               onMouseMove={onLogoMove}
               onMouseLeave={onLogoLeave}
             >
-              <img src="/logo.svg" alt="Verilumen" className="fluid-logo drop-shadow-[0_0_12px_var(--vl-glow)]" />
+              <div className="relative w-14 h-14 flex items-center justify-center transition-transform duration-300">
+                <img src="/images/new_logo.png" alt="Verilumen" className="w-full h-full object-contain drop-shadow-[0_0_15px_var(--vl-glow)]" />
+              </div>
               <div>
-                <div className="text-sm font-extrabold tracking-[-0.02em] text-text italic">VERILUMEN</div>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="h-px w-3 bg-accent" />
-                  <span className="font-mono text-[10px] font-semibold tracking-[0.28em] text-accent">LABS</span>
+                <div className="text-lg font-extrabold tracking-tight text-text">VERILUMEN</div>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="h-px w-3 bg-primary" />
+                  <span className="font-mono text-[9px] font-bold tracking-[0.3em] text-primary">LABS</span>
                 </div>
               </div>
             </a>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">
-              An intelligent semiconductor engineering operating layer — data to AI to action.
+            <p className="mt-6 max-w-[280px] text-sm leading-relaxed text-text-muted">
+              The intelligent semiconductor engineering operating layer. <br/> From data, to AI, to action.
             </p>
-            <div className="social-net">
+            
+                        <div className="social-net mt-8">
               <a
                 href="https://www.linkedin.com/company/verilumen-labs"
                 target="_blank"
@@ -114,7 +122,7 @@ export function Footer() {
                   <span className="li-node__particle li-node__particle--6" />
                   <IconLinkedIn />
                 </span>
-                <span className="li-node__label">
+                <span className="li-node__label font-medium">
                   LinkedIn
                   <span className="li-node__underline" />
                 </span>
@@ -150,7 +158,7 @@ export function Footer() {
                   <span className="ig-node__pulse" />
                   <IconInstagram />
                 </span>
-                <span className="ig-node__label">
+                <span className="ig-node__label font-medium">
                   Instagram
                   <span className="ig-node__underline" />
                 </span>
@@ -182,15 +190,15 @@ export function Footer() {
           </ScrollReveal>
 
           {columns.map((col, ci) => (
-            <ScrollReveal key={col.title} delay={0.06 + ci * 0.06}>
-              <p className="font-mono text-[11px] font-semibold tracking-[0.18em] text-text uppercase">
+            <ScrollReveal key={col.title} delay={0.1 + ci * 0.1} className="lg:justify-self-center">
+              <p className="font-mono text-[11px] font-bold tracking-[0.2em] text-text uppercase">
                 {col.title}
               </p>
-              <ul className="mt-4 space-y-1.5">
+              <ul className="mt-6 space-y-3">
                 {col.links.map((link) => (
                   <li key={`${col.title}-${link.label}`}>
-                    <a href={link.href} className="footer-link">
-                      <span className="footer-link__tick" aria-hidden />
+                    <a href={link.href} className="group inline-flex items-center gap-3 text-sm text-text-muted hover:text-text transition-colors">
+                      <span className="h-px w-2 bg-border-subtle group-hover:w-4 group-hover:bg-primary transition-all duration-300" aria-hidden />
                       {link.label}
                     </a>
                   </li>
@@ -200,21 +208,29 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="footer-bottom mt-8 flex flex-col gap-3 border-t border-border pt-5 text-xs text-text-dim sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Verilumen Labs · Distributed Neural Trust</p>
-          <p className="tracking-wide">
-            <span className="footer-legal">Privacy</span>
-            <span className="mx-2 opacity-40">·</span>
-            <span className="footer-legal">Terms</span>
-            <span className="mx-2 opacity-40">·</span>
-            <span className="footer-legal">Security</span>
+        <div className="mt-16 flex flex-col gap-4 border-t border-border-subtle/40 pt-8 sm:flex-row sm:items-center sm:justify-between relative">
+          <div className="absolute top-0 left-0 w-32 h-px bg-gradient-to-r from-primary to-transparent opacity-60" />
+          <p className="text-xs text-text-muted font-medium flex items-center gap-1.5">
+            &copy; 2026 Verilumen Labs <span className="text-primary mx-1">&middot;</span> Distributed Neural Trust
+          </p>
+          <p className="flex items-center gap-4 text-xs font-medium text-text-muted">
+            <span className="hover:text-primary cursor-pointer transition-colors">Privacy</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">Terms</span>
+            <span className="hover:text-primary cursor-pointer transition-colors">Security</span>
           </p>
         </div>
       </div>
 
-      <div className="footer-wave-stage relative w-full">
+      <div className="absolute bottom-0 left-0 right-0 w-full h-[250px] pointer-events-none opacity-85 overflow-hidden">
         <FooterField />
       </div>
     </footer>
   )
 }
+
+
+
+
+
+
+
